@@ -87,9 +87,3 @@ ll Query(int x, int y, int v = 1, int l = 1, int r = n) {
   int mid = (l + r) >> 1;
   return (Query(x, y, v << 1, l, mid) + Query(x, y, v << 1 | 1, mid + 1, r)) % MOD; // change if min / max tree
 }
-int main() {
-  cin.tie(0)->sync_with_stdio(0);
-  // freopen(".in","r",stdin);
-  // freopen(".out","w",stdout);
-  
-}
