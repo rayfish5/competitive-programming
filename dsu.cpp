@@ -5,7 +5,6 @@ struct DSU {
     DSU(int num_nodes) {
         p = vector<int>(num_nodes, -1);
     }
-    
     int get(int n) {
         return p[n] < 0 ? n : p[n] = get(p[n]);
     }
