@@ -23,7 +23,7 @@ ll fib(ll n) {
   Matrix ans = {{{1,0}, {0,1}}};
   Matrix mplier = {{{1,1}, {1,0}}};
   // use n's binary representation
-  for (; n > 0; n /= 2, mplier = mul(mplier, mplier)) {
+  for (; n > 0; n >>= 1, mplier = mul(mplier, mplier)) {
     if (n & 1) ans = mul(ans, mplier);
   }
   return ans[0][1];
