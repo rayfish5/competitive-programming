@@ -4,6 +4,7 @@ using namespace std;
 typedef long long ll;
 
 // WARNING: SegTree breaks if sets to 0 or negative numbers! (PushDown function and mod)
+// To convert sum to min / max tree, modify pushup and query
 const int MOD = 1e9+7;
 const int V = 1<<18;
 int n = 1<<17;
@@ -40,7 +41,7 @@ void PushDown(int v) {
   if (ad[v]) AddTag(v << 1, ad[v]), AddTag(v << 1 | 1, ad[v]), ad[v] = 0;
 }
 void PushUp(int v) {
-  sm[v] = (sm[v << 1] + sm[v << 1 | 1]) % MOD;
+  sm[v] = (sm[v << 1] + sm[v << 1 | 1]) % MOD; // change if min / max tree
 }
 
 void Modify_Add(int x, int y, int z, int v = 1, int l = 1, int r = n) {
