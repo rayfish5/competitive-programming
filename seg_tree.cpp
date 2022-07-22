@@ -4,7 +4,7 @@ using namespace std;
 typedef long long ll;
 
 // WARNING: SegTree breaks if sets to 0 or negative numbers! (PushDown function and mod)
-// To convert sum to min / max tree, modify pushup and query
+// To convert sum to min / max tree, modify ALL sm, pushup and query
 const int MOD = 1e9+7;
 const int V = 1<<18;
 int n = 1<<17;
