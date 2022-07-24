@@ -3,11 +3,14 @@
 using namespace std;
 typedef long long ll;
 
+// everything is 1-indexed
 // WARNING: SegTree breaks if sets to 0 or negative numbers! (PushDown function and mod)
-// To convert sum to min / max tree, modify ALL sm, pushup and query
-const int MOD = 1e9+7;
+// To convert sum to min / max tree, modify sm and Func
+
+const ll MOD = 1e9+7;
 const int V = 1<<18;
-int n = 1<<17;
+const int N = 1<<17; // smallest power of two at least array size
+
 int si[V]; ll sm[V], mu[V], ad[V], st[V];
 // call at start
 void init() {
@@ -40,11 +43,14 @@ void PushDown(int v) {
   if (mu[v] > 1) MulTag(v << 1, mu[v]), MulTag(v << 1 | 1, mu[v]), mu[v] = 1;
   if (ad[v]) AddTag(v << 1, ad[v]), AddTag(v << 1 | 1, ad[v]), ad[v] = 0;
 }
+ll Func(ll x, ll y) {
+  return (x + y) % MOD;
+}
 void PushUp(int v) {
-  sm[v] = (sm[v << 1] + sm[v << 1 | 1]) % MOD; // change if min / max tree
+  sm[v] = Func(sm[v << 1], sm[v << 1 | 1]);
 }
 
-void Modify_Add(int x, int y, int z, int v = 1, int l = 1, int r = n) {
+void Modify_Add(int x, int y, ll z, int v = 1, int l = 1, int r = N) {
   if (x > r || y < l) return;
   if (x <= l && r <= y) {
     AddTag(v, z);
@@ -56,7 +62,7 @@ void Modify_Add(int x, int y, int z, int v = 1, int l = 1, int r = n) {
   Modify_Add(x, y, z, v << 1 | 1, mid + 1, r);
   PushUp(v);
 }
-void Modify_Mul(int x, int y, int z, int v = 1, int l = 1, int r = n) {
+void Modify_Mul(int x, int y, ll z, int v = 1, int l = 1, int r = N) {
   if (x > r || y < l) return;
   if (x <= l && r <= y) {
     MulTag(v, z);
@@ -68,7 +74,7 @@ void Modify_Mul(int x, int y, int z, int v = 1, int l = 1, int r = n) {
   Modify_Mul(x, y, z, v << 1 | 1, mid + 1, r);
   PushUp(v);
 }
-void Modify_Set(int x, int y, int z, int v = 1, int l = 1, int r = n) {
+void Modify_Set(int x, int y, ll z, int v = 1, int l = 1, int r = N) {
   if (x > r || y < l) return;
   if (x <= l && r <= y) {
     SetTag(v, z);
@@ -81,10 +87,10 @@ void Modify_Set(int x, int y, int z, int v = 1, int l = 1, int r = n) {
   PushUp(v);
 }
 
-ll Query(int x, int y, int v = 1, int l = 1, int r = n) {
+ll Query(int x, int y, int v = 1, int l = 1, int r = N) {
   if (x > r || y < l) return 0;
   if (x <= l && r <= y) return sm[v];
   PushDown(v);
   int mid = (l + r) >> 1;
-  return (Query(x, y, v << 1, l, mid) + Query(x, y, v << 1 | 1, mid + 1, r)) % MOD; // change if min / max tree
+  return Func(Query(x, y, v << 1, l, mid), Query(x, y, v << 1 | 1, mid + 1, r));
 }
