@@ -5,13 +5,13 @@ typedef long long ll;
 
 // 1-indexed, closed intervals
 // WARNING: SegTree breaks if sets to 0 or negative numbers! (PushDown function and mod)
-// To convert sum to min / max tree, modify sumt and Func
+// To convert sum to min / max tree, modify val and Func
 
 const ll MOD = 1e9+7;
 const int V = 1<<18; // 2 * N
 const int N = 1<<17; // smallest power of two at least array size
 
-int si[V], l_end[V], r_end[V]; ll sumt[V], mult[V], addt[V], sett[V];
+int si[V], l_end[V], r_end[V]; ll val[V], mult[V], addt[V], sett[V];
 // call at start
 void init() {
   fill(mult, mult + V, 1);
@@ -27,18 +27,18 @@ void init() {
 }
 
 void SetTag(int v, ll z) {
-  sumt[v] = si[v] * z; sumt[v] %= MOD;
+  val[v] = si[v] * z; val[v] %= MOD;
   sett[v] = z;
   addt[v] = 0;
   mult[v] = 1;
 }
 void MulTag(int v, ll z) {
-  sumt[v] *= z; sumt[v] %= MOD;
+  val[v] *= z; val[v] %= MOD;
   mult[v] *= z; mult[v] %= MOD;
   addt[v] *= z; addt[v] %= MOD;
 }
 void AddTag(int v, ll z) {
-  sumt[v] += si[v] * z; sumt[v] %= MOD;
+  val[v] += si[v] * z; val[v] %= MOD;
   addt[v] += z; addt[v] %= MOD;
 }
 void PushDown(int v) {
@@ -50,7 +50,7 @@ ll Func(ll x, ll y) {
   return (x + y) % MOD;
 }
 void PushUp(int v) {
-  sumt[v] = Func(sumt[v << 1], sumt[v << 1 | 1]);
+  val[v] = Func(val[v << 1], val[v << 1 | 1]);
 }
 
 void Modify_Add(int x, int y, ll z, int v = 1, int l = 1, int r = N) {
@@ -92,7 +92,7 @@ void Modify_Set(int x, int y, ll z, int v = 1, int l = 1, int r = N) {
 
 ll Query(int x, int y, int v = 1, int l = 1, int r = N) {
   if (x > r || y < l) return 0;
-  if (x <= l && r <= y) return sumt[v];
+  if (x <= l && r <= y) return val[v];
   PushDown(v);
   int mid = (l + r) >> 1;
   return Func(Query(x, y, v << 1, l, mid), Query(x, y, v << 1 | 1, mid + 1, r));
