@@ -17,6 +17,7 @@ struct HashedString {
       p_hash.at(i+1) = ((p_hash.at(i) * P) % M + s.at(i)) % M;
     }
   }
+  // 0-indexed, closed interval
   ll get_hash(int b, int e) {
     ll raw_val = p_hash.at(e+1) - p_hash.at(b) * pow.at(e-b+1);
     return (raw_val % M + M) % M;
