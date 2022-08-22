@@ -3,7 +3,6 @@
 using namespace std;
 typedef long long ll;
 
-// 1-indexed
 struct BIT {
     int n;
     vector<ll> arr;
