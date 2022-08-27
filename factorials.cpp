@@ -1,18 +1,15 @@
 // 0 <= b < MOD
-ll pow(ll b, ll e) {
+ll bpow(ll b, ll e) {
   ll res = 1;
   while (e > 0) {
-    if (e & 1) {
-      res = res * b % MOD;
-      e--;
-    }
+    if (e & 1) res = res * b % MOD;
     b = b * b % MOD;
     e >>= 1;
   }
   return res;
 }
 ll inv(ll x) {
-  return pow(x, MOD-2);
+  return bpow(x, MOD-2);
 }
 
 const int MAX_A = 1e6;
