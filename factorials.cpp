@@ -23,3 +23,6 @@ void setup() {
     fact_inv[i] = inv(fact[i]);
   }
 }
+ll binom(int a, int b) {
+  return fact[a] * fact_inv[b] % MOD * fact_inv[a-b] % MOD;
+}
