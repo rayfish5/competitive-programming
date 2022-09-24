@@ -16,7 +16,7 @@ void build(vector<ll>& arr1, vector<ll>& arr2, int n) {
         }
     }
 }
-// [l, r)
+// 0-indexed, [l, r)
 ll r_max1(int l, int r) {
     int p = 31 - __builtin_clz(r-l);
     return max(st1[p][l], st1[p][r-(1<<p)]);
