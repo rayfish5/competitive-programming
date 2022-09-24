@@ -1,8 +1,3 @@
-#include <bits/stdc++.h>
-
-using namespace std;
-typedef long long ll;
-
 const int MAX_N = 1<<18;
 const int LOG_N = 19;
 ll st1[LOG_N][MAX_N];
