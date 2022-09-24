@@ -3,7 +3,7 @@ const int LOG_N = 19;
 ll st1[LOG_N][MAX_N];
 ll st2[LOG_N][MAX_N];
 
-void build(vector<ll>& arr1, vector<ll>& arr2, int n) {
+void build_st(vector<ll>& arr1, vector<ll>& arr2, int n) {
     int h = floor(log2(n));
     for (int j = 0; j < n; j++) {
         st1[0][j] = arr1[j];
