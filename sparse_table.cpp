@@ -1,27 +1,27 @@
 const int MAX_N = 1<<18;
 const int LOG_N = 19;
-ll st1[LOG_N][MAX_N];
-ll st2[LOG_N][MAX_N];
+ll stmax[LOG_N][MAX_N];
+ll stmin[LOG_N][MAX_N];
 
-void build_st(vector<ll>& arr1, vector<ll>& arr2, int n) {
+void build_st(vector<ll>& arrmax, vector<ll>& arrmin, int n) {
     int h = floor(log2(n));
     for (int j = 0; j < n; j++) {
-        st1[0][j] = arr1[j];
-        st2[0][j] = arr2[j];
+        stmax[0][j] = arrmax[j];
+        stmin[0][j] = arrmin[j];
     }
     for (int i = 1; i <= h; i++) {
         for (int j = 0; j + (1<<i) <= n; j++) {
-            st1[i][j] = max(st1[i-1][j], st1[i-1][j + (1<<(i-1))]);
-            st2[i][j] = min(st2[i-1][j], st2[i-1][j + (1<<(i-1))]);
+            stmax[i][j] = max(stmax[i-1][j], stmax[i-1][j + (1<<(i-1))]);
+            stmin[i][j] = min(stmin[i-1][j], stmin[i-1][j + (1<<(i-1))]);
         }
     }
 }
 // 0-indexed, [l, r)
-ll r_max1(int l, int r) {
+ll r_max(int l, int r) {
     int p = 31 - __builtin_clz(r-l);
-    return max(st1[p][l], st1[p][r-(1<<p)]);
+    return max(stmax[p][l], stmax[p][r-(1<<p)]);
 }
-ll r_min2(int l, int r) {
+ll r_min(int l, int r) {
     int p = 31 - __builtin_clz(r-l);
-    return min(st2[p][l], st2[p][r-(1<<p)]);
+    return min(stmin[p][l], stmin[p][r-(1<<p)]);
 }
