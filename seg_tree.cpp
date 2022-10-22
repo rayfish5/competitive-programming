@@ -1,8 +1,3 @@
-#include <bits/stdc++.h>
-
-using namespace std;
-typedef long long ll;
-
 // 1-indexed, closed intervals
 // WARNING: SegTree breaks if sets to 0 or negative numbers! (PushDown function and mod)
 // To convert sum to min / max tree, modify val and Func
