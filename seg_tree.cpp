@@ -2,7 +2,6 @@
 // WARNING: SegTree breaks if sets to 0 or negative numbers! (PushDown function and mod)
 // To convert sum to min / max tree, modify val and Func
 
-const ll MOD = 1e9+7;
 const int V = 1<<18; // 2 * N
 const int N = 1<<17; // smallest power of two at least array size
 
