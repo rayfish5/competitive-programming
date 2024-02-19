@@ -1,4 +1,4 @@
-const int MAX_N = 5e8;
+const int MAX_N = 1e6;
 vector<int> p; // primes
 bool comp[MAX_N+1]; // initial assume prime
 void sieve(int n) {
