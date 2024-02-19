@@ -1,3 +1,4 @@
+// can use linear sieve to compute multiplicative functions
 const int MAX_N = 1e6;
 vector<int> p; // primes
 bool comp[MAX_N+1]; // initial assume prime
