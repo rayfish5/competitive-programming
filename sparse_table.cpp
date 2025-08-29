@@ -1,53 +1,32 @@
-struct SparseTableMin {
-  const int MAX_N = 1<<19;
-  const int LOG_N = 20;
-  ll** stmin;
+struct SparseTable {
+  ll** _st;
+  function<ll(ll, ll)> comp;
 
-  SparseTableMin(ll* arrmin, int n) {
-    stmin = new ll*[LOG_N] {};
-    for (int i = 0; i < LOG_N; i++) {
-      stmin[i] = new ll[MAX_N] {};
-    }
+  SparseTable(vector<ll>& arr, bool is_min) {
+    int n = arr.size();
     int h = __lg(n);
+    _st = new ll*[h + 1];
+    for (int i = 0; i <= h; i++) {
+      _st[i] = new ll[n] {};
+    }
+    if (is_min) {
+      comp = [](ll a, ll b) { return min(a, b); };
+    } else {
+      comp = [](ll a, ll b) { return max(a, b); };
+    }
+
     for (int j = 0; j < n; j++) {
-        stmin[0][j] = arrmin[j];
+        _st[0][j] = arr[j];
     }
     for (int i = 1; i <= h; i++) {
         for (int j = 0; j + (1<<i) <= n; j++) {
-            stmin[i][j] = min(stmin[i-1][j], stmin[i-1][j + (1<<(i-1))]);
+            _st[i][j] = comp(_st[i-1][j], _st[i-1][j + (1<<(i-1))]);
         }
     }
   }
   // 0-indexed, [l, r)
-  ll r_min(int l, int r) {
+  ll query(int l, int r) {
     int p = __lg(r-l);
-    return min(stmin[p][l], stmin[p][r-(1<<p)]);
-  }
-};
-
-struct SparseTableMax {
-  const int MAX_N = 1<<19;
-  const int LOG_N = 20;
-  ll** stmax;
-
-  SparseTableMax(ll* arrmax, int n) {
-    stmax = new ll*[LOG_N] {};
-    for (int i = 0; i < LOG_N; i++) {
-      stmax[i] = new ll[MAX_N] {};
-    }
-    int h = __lg(n);
-    for (int j = 0; j < n; j++) {
-        stmax[0][j] = arrmax[j];
-    }
-    for (int i = 1; i <= h; i++) {
-        for (int j = 0; j + (1<<i) <= n; j++) {
-            stmax[i][j] = max(stmax[i-1][j], stmax[i-1][j + (1<<(i-1))]);
-        }
-    }
-  }
-  // 0-indexed, [l, r)
-  ll r_max(int l, int r) {
-    int p = __lg(r-l);
-    return max(stmax[p][l], stmax[p][r-(1<<p)]);
+    return comp(_st[p][l], _st[p][r-(1<<p)]);
   }
 };
