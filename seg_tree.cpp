@@ -1,7 +1,7 @@
 struct SegTree {
   // 1-indexed, closed intervals
   // WARNING: SegTree breaks if sets to 0 or negative numbers! (PushDown function and mod)
-  // To convert sum to min / max tree, modify func
+  // To convert sum to min / max tree, modify tags and func
   ll MOD;
   int *si, *l_end, *r_end; ll *val, *mult, *addt, *sett;
   // N = size of array
